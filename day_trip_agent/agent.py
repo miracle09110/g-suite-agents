@@ -1,5 +1,6 @@
 from google.adk.agents.llm_agent import Agent
 from google.adk.tools import google_search
+from google.adk.tools.preload_memory_tool import PreloadMemoryTool
 
 root_agent = Agent(
     name="day_trip_agent",
@@ -19,5 +20,5 @@ root_agent = Agent(
 
     RETURN itinerary in MARKDOWN FORMAT with clear time blocks and specific venue names.
     """,
-    tools=[google_search]
+    tools=[google_search, PreloadMemoryTool()]
 )
