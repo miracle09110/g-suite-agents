@@ -45,19 +45,22 @@ Open `.env` and replace `your_api_key_here` with your key from [Google AI Studio
 
 ## What's New in This Branch
 
-**Concept: Router Pattern**
+**Concept: Sequential Agent (Pipeline)**
 
-In the orchestrator pattern, one agent always calls the same sub-agents. The router pattern is different: a top-level agent reads the user's request and **decides which specialist agent is the best fit**, then forwards the request to that one.
+A `SequentialAgent` runs a list of sub-agents **one after another**, automatically passing each agent's output as context to the next. This is the pipeline pattern.
 
+```python
+from google.adk.agents.sequential_agent import SequentialAgent
+
+find_and_navigate_agent = SequentialAgent(
+    name="find_and_navigate_agent",
+    sub_agents=[foodie_agent, transportation_agent],
+)
 ```
-User
- └─> router_agent (decides based on intent)
-       ├─> foodie_agent         — "where should I eat?"
-       ├─> weekend_guide_agent  — "what's happening this weekend?"
-       └─> day_trip_agent       — everything else
-```
 
-The router doesn't answer questions directly — it reads the request, picks a specialist, and returns that agent's response.
+Here, `foodie_agent` finds the best restaurant and saves its answer to `state['destination']`. Then `transportation_agent` automatically reads that destination from state and gives directions — no manual wiring needed.
+
+The `router_agent` has been updated in this branch to include `find_and_navigate_agent` as one of its routing options.
 
 ---
 
@@ -69,35 +72,32 @@ The router doesn't answer questions directly — it reads the request, picks a s
 | `day_trip_agent/` | Day trip planner with Google Search (branch 001) |
 | `weather_aware_planner/` | Custom-tool weather planner (branch 002) |
 | `trip_concierge/` | Orchestrator with nested agents (branch 003) |
-| `router_agent/` | **New** — routes requests to foodie, weekend guide, or day trip specialists |
+| `router_agent/` | **Updated** — now includes a `find_and_navigate_agent` sequential pipeline |
 
 ---
 
 ## Run an Agent
 
 ```bash
-# Run the router ← try this one
+# Run the router (which now includes the sequential pipeline)
 adk web router_agent
-
-# Or any previous agent
-adk web trip_concierge
 ```
 
 Open [http://localhost:8000](http://localhost:8000) in your browser.
 
 ## Things to Try (with `router_agent`)
 
-- `"What's the best ramen place near downtown?"` → routes to `foodie_agent`
-- `"What concerts are happening this weekend in SF?"` → routes to `weekend_guide_agent`
-- `"Plan me a full day trip to Napa Valley."` → routes to `day_trip_agent`
+- `"Find the best sushi near Palo Alto and give me directions from San Francisco."` → triggers the sequential pipeline: find → navigate
+- `"What's good to eat in downtown SF?"` → routes to `foodie_agent` directly (no pipeline needed)
+- `"Plan a day trip to Napa."` → routes to `day_trip_agent`
 
-Notice the same router handles all three types of requests — you don't have to tell it which agent to use.
+For the first prompt, watch two agents fire in sequence: the foodie agent picks the restaurant, then the navigation agent gives directions to that exact place.
 
 ---
 
 ## Navigate Branches
 
 ```bash
-git checkout 005-sequential            # next: sequential pipeline
-git checkout 003-orchestrator          # back
+git checkout 005.5-sequential-folder-restructure   # next: clean folder structure
+git checkout 004-router                             # back
 ```
