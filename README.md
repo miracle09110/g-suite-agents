@@ -46,25 +46,19 @@ Open `.env` and replace `your_api_key_here` with your key from [Google AI Studio
 
 ## What's New in This Branch
 
-**Concept: Custom Tools**
+**Concept: Orchestrator Pattern**
 
-In the previous branch, the agent used a built-in tool from ADK. Here, you write your own Python function and hand it directly to the agent.
+So far, one agent does everything. The orchestrator pattern splits responsibility: a top-level agent receives requests and **delegates work to specialist sub-agents**, each expert at one thing.
 
-Any regular Python function becomes a tool — ADK reads the function name, docstring, and type hints to teach the agent how and when to call it.
-
-```python
-def get_live_weather_forecast(location: str) -> dict:
-    """Gets the current, real-time weather forecast for a specified location."""
-    # your Python code here — calls the NWS API
-    ...
-
-root_agent = Agent(
-    name="weather_aware_planner",
-    tools=[get_live_weather_forecast],   # ← just pass the function
-)
+```
+User
+ └─> trip_data_concierge (orchestrator)
+       ├─> call_db_agent       — fetches hotel/landmark data
+       └─> call_concierge_agent
+             └─> food_critic_agent  — gives restaurant opinions
 ```
 
-The agent now calls your function automatically whenever the user asks about weather or outdoor plans.
+The orchestrator in `trip_concierge/` calls two async tool-functions. One fetches data from a mock database; the other asks a concierge agent (which in turn asks a food critic agent) for a recommendation. Results flow through `tool_context.state` so each step can read what the previous one found.
 
 ---
 
@@ -74,35 +68,35 @@ The agent now calls your function automatically whenever the user asks about wea
 |--------|-------------|
 | `basic_chat_bot/` | Basic agent (branch 000) |
 | `day_trip_agent/` | Day trip planner with Google Search (branch 001) |
-| `weather_aware_planner/` | **New** — trip planner that checks live weather before suggesting activities |
+| `weather_aware_planner/` | Custom-tool weather planner (branch 002) |
+| `trip_concierge/` | **New** — orchestrator that chains a DB agent and a concierge agent |
 
 ---
 
 ## Run an Agent
 
 ```bash
-# Run the weather-aware trip planner ← try this one
-adk web weather_aware_planner
+# Run the orchestrator ← try this one
+adk web trip_concierge
 
-# Or the day trip planner from branch 001
+# Or any previous agent
 adk web day_trip_agent
 ```
 
 Open [http://localhost:8000](http://localhost:8000) in your browser.
 
-## Things to Try (with `weather_aware_planner`)
+## Things to Try (with `trip_concierge`)
 
-- `"Should I go hiking near Sunnyvale today?"`
-- `"Plan an outdoor activity in San Francisco this afternoon."`
-- `"Is it a good day for a trip to Lake Tahoe?"`
+- `"Find me a hotel and then suggest a restaurant nearby."`
+- `"What are the top-rated hotels, and where should I eat after checking in?"`
 
-Watch the agent call `get_live_weather_forecast` and incorporate the result into its answer.
+Watch the agent call `call_db_agent` first, then `call_concierge_agent` with the retrieved data — two agents coordinating automatically.
 
 ---
 
 ## Navigate Branches
 
 ```bash
-git checkout 003-orchestrator          # next: agents delegating to other agents
-git checkout 001-agent-with-tool       # back
+git checkout 004-router                # next: routing between agents
+git checkout 002-agent-custom-tool     # back
 ```
