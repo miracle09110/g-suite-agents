@@ -46,46 +46,57 @@ Open `.env` and replace `your_api_key_here` with your key from [Google AI Studio
 
 ## What's New in This Branch
 
-**Concept: The Basic Agent**
+**Concept: Built-in Tools**
 
-An `Agent` is just an LLM given a name, a model, and instructions. That's it.
+Tools let an agent take **actions** beyond just generating text. The most useful built-in tool is `google_search`, which gives the agent access to real-time information from the internet.
 
 ```python
-from google.adk.agents import Agent
+from google.adk.tools import google_search
 
 root_agent = Agent(
-    model='gemini-2.0-flash',
-    name='root_agent',
-    instruction='Answer user questions to the best of your knowledge',
+    name="day_trip_agent",
+    tools=[google_search],   # ← the only change from branch 000
 )
 ```
 
-No tools. No memory. Just the model responding to your prompts. Every pattern you'll learn in the later branches starts here.
+The agent now decides *on its own* when to search — it calls the tool mid-response whenever it needs current information.
 
 ---
 
-## Run This Agent
+## What's in This Branch
+
+| Folder | Description |
+|--------|-------------|
+| `basic_chat_bot/` | The same basic agent from branch 000 (no tools) |
+| `day_trip_agent/` | **New** — a day trip planner with Google Search |
+
+---
+
+## Run an Agent
 
 ```bash
+# Run the basic chat bot (familiar from branch 000)
 adk web basic_chat_bot
+
+# Run the day trip planner ← try this one to see tools in action
+adk web day_trip_agent
 ```
 
 Open [http://localhost:8000](http://localhost:8000) in your browser.
 
-## Things to Try
+## Things to Try (with `day_trip_agent`)
 
-- `"What is the capital of France?"`
-- `"Explain machine learning in one sentence."`
-- `"Write a haiku about coffee."`
+- `"Plan me a fun day trip to San Francisco on a $50 budget."`
+- `"I want a relaxing day near the ocean. What do you suggest?"`
+- `"Plan an adventurous day trip for someone who loves hiking."`
 
-The agent answers from the model's training data only — it has no internet access yet. You'll add that in the next branch.
+Watch the agent **call Google Search automatically** to find current info, hours, and events.
 
 ---
 
-## Move to the Next Branch
+## Navigate Branches
 
 ```bash
-git checkout 001-agent-with-tool
+git checkout 002-agent-custom-tool   # next: write your own tool
+git checkout 000-basic-agent         # back
 ```
-
-Your `.env` file is not tracked by git, so it stays in place when you switch branches.
