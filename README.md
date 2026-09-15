@@ -46,19 +46,19 @@ Open `.env` and replace `your_api_key_here` with your key from [Google AI Studio
 
 ## What's New in This Branch
 
-**Concept: Orchestrator Pattern**
+**Concept: Router Pattern**
 
-So far, one agent does everything. The orchestrator pattern splits responsibility: a top-level agent receives requests and **delegates work to specialist sub-agents**, each expert at one thing.
+In the orchestrator pattern, one agent always calls the same sub-agents. The router pattern is different: a top-level agent reads the user's request and **decides which specialist agent is the best fit**, then forwards the request to that one.
 
 ```
 User
- └─> trip_data_concierge (orchestrator)
-       ├─> call_db_agent       — fetches hotel/landmark data
-       └─> call_concierge_agent
-             └─> food_critic_agent  — gives restaurant opinions
+ └─> router_agent (decides based on intent)
+       ├─> foodie_agent         — "where should I eat?"
+       ├─> weekend_guide_agent  — "what's happening this weekend?"
+       └─> day_trip_agent       — everything else
 ```
 
-The orchestrator in `trip_concierge/` calls two async tool-functions. One fetches data from a mock database; the other asks a concierge agent (which in turn asks a food critic agent) for a recommendation. Results flow through `tool_context.state` so each step can read what the previous one found.
+The router doesn't answer questions directly — it reads the request, picks a specialist, and returns that agent's response.
 
 ---
 
@@ -69,34 +69,36 @@ The orchestrator in `trip_concierge/` calls two async tool-functions. One fetche
 | `basic_chat_bot/` | Basic agent (branch 000) |
 | `day_trip_agent/` | Day trip planner with Google Search (branch 001) |
 | `weather_aware_planner/` | Custom-tool weather planner (branch 002) |
-| `trip_concierge/` | **New** — orchestrator that chains a DB agent and a concierge agent |
+| `trip_concierge/` | Orchestrator with nested agents (branch 003) |
+| `router_agent/` | **New** — routes requests to foodie, weekend guide, or day trip specialists |
 
 ---
 
 ## Run an Agent
 
 ```bash
-# Run the orchestrator ← try this one
-adk web trip_concierge
+# Run the router ← try this one
+adk web router_agent
 
 # Or any previous agent
-adk web day_trip_agent
+adk web trip_concierge
 ```
 
 Open [http://localhost:8000](http://localhost:8000) in your browser.
 
-## Things to Try (with `trip_concierge`)
+## Things to Try (with `router_agent`)
 
-- `"Find me a hotel and then suggest a restaurant nearby."`
-- `"What are the top-rated hotels, and where should I eat after checking in?"`
+- `"What's the best ramen place near downtown?"` → routes to `foodie_agent`
+- `"What concerts are happening this weekend in SF?"` → routes to `weekend_guide_agent`
+- `"Plan me a full day trip to Napa Valley."` → routes to `day_trip_agent`
 
-Watch the agent call `call_db_agent` first, then `call_concierge_agent` with the retrieved data — two agents coordinating automatically.
+Notice the same router handles all three types of requests — you don't have to tell it which agent to use.
 
 ---
 
 ## Navigate Branches
 
 ```bash
-git checkout 004-router                # next: routing between agents
-git checkout 002-agent-custom-tool     # back
+git checkout 005-sequential            # next: sequential pipeline
+git checkout 003-orchestrator          # back
 ```
