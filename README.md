@@ -20,13 +20,21 @@ Welcome! In this workshop you'll build a series of AI agents using Google's **Ag
 
 Do this once after cloning. Your setup persists across all branch switches.
 
-### 1. Install dependencies
+### 1. Create and activate a virtual environment
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate    # Mac / Linux
+# .venv\Scripts\activate     # Windows
+```
+
+### 2. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Create your API key file
+### 3. Create your API key file
 
 ```bash
 cp .env.example .env
