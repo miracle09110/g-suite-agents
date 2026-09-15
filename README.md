@@ -46,20 +46,25 @@ Open `.env` and replace `your_api_key_here` with your key from [Google AI Studio
 
 ## What's New in This Branch
 
-**Concept: Built-in Tools**
+**Concept: Custom Tools**
 
-Tools let an agent take **actions** beyond just generating text. The most useful built-in tool is `google_search`, which gives the agent access to real-time information from the internet.
+In the previous branch, the agent used a built-in tool from ADK. Here, you write your own Python function and hand it directly to the agent.
+
+Any regular Python function becomes a tool — ADK reads the function name, docstring, and type hints to teach the agent how and when to call it.
 
 ```python
-from google.adk.tools import google_search
+def get_live_weather_forecast(location: str) -> dict:
+    """Gets the current, real-time weather forecast for a specified location."""
+    # your Python code here — calls the NWS API
+    ...
 
 root_agent = Agent(
-    name="day_trip_agent",
-    tools=[google_search],   # ← the only change from branch 000
+    name="weather_aware_planner",
+    tools=[get_live_weather_forecast],   # ← just pass the function
 )
 ```
 
-The agent now decides *on its own* when to search — it calls the tool mid-response whenever it needs current information.
+The agent now calls your function automatically whenever the user asks about weather or outdoor plans.
 
 ---
 
@@ -67,36 +72,37 @@ The agent now decides *on its own* when to search — it calls the tool mid-resp
 
 | Folder | Description |
 |--------|-------------|
-| `basic_chat_bot/` | The same basic agent from branch 000 (no tools) |
-| `day_trip_agent/` | **New** — a day trip planner with Google Search |
+| `basic_chat_bot/` | Basic agent (branch 000) |
+| `day_trip_agent/` | Day trip planner with Google Search (branch 001) |
+| `weather_aware_planner/` | **New** — trip planner that checks live weather before suggesting activities |
 
 ---
 
 ## Run an Agent
 
 ```bash
-# Run the basic chat bot (familiar from branch 000)
-adk web basic_chat_bot
+# Run the weather-aware trip planner ← try this one
+adk web weather_aware_planner
 
-# Run the day trip planner ← try this one to see tools in action
+# Or the day trip planner from branch 001
 adk web day_trip_agent
 ```
 
 Open [http://localhost:8000](http://localhost:8000) in your browser.
 
-## Things to Try (with `day_trip_agent`)
+## Things to Try (with `weather_aware_planner`)
 
-- `"Plan me a fun day trip to San Francisco on a $50 budget."`
-- `"I want a relaxing day near the ocean. What do you suggest?"`
-- `"Plan an adventurous day trip for someone who loves hiking."`
+- `"Should I go hiking near Sunnyvale today?"`
+- `"Plan an outdoor activity in San Francisco this afternoon."`
+- `"Is it a good day for a trip to Lake Tahoe?"`
 
-Watch the agent **call Google Search automatically** to find current info, hours, and events.
+Watch the agent call `get_live_weather_forecast` and incorporate the result into its answer.
 
 ---
 
 ## Navigate Branches
 
 ```bash
-git checkout 002-agent-custom-tool   # next: write your own tool
-git checkout 000-basic-agent         # back
+git checkout 003-orchestrator          # next: agents delegating to other agents
+git checkout 001-agent-with-tool       # back
 ```
