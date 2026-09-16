@@ -3,7 +3,7 @@ from google.adk.tools import google_search
 
 foodie_agent = Agent(
     name="foodie_agent",
-    model="gemini-3.6-flash",
+    model="gemini-3.5-flash",
     tools=[google_search],
     instruction="""You are an expert food critic. Your goal is to find the best restaurant based on a user's request.
 

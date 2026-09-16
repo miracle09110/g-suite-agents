@@ -8,7 +8,7 @@ from .find_and_navigate_agent import find_and_navigate_agent
 
 root_agent = Agent(
     name="router_agent",
-    model="gemini-3.6-flash",
+    model="gemini-3.5-flash",
     sub_agents=[foodie_agent, weekend_guide_agent, day_trip_agent, find_and_navigate_agent],
     instruction="""
     You are a request router. Your job is to analyze a user's query and decide which of the following agents or workflows is best suited to handle it.
