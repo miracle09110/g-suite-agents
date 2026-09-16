@@ -1,62 +1,97 @@
 import requests
-import json
 from google.adk.agents.llm_agent import Agent
 
 LOCATION_COORDINATES = {
-    "sunnyvale": "37.3688,-122.0363",
-    "san francisco": "37.7749,-122.4194",
-    "lake tahoe": "39.0968,-120.0324"
+    "manila": (14.5995, 120.9842),
+    "quezon city": (14.6760, 121.0437),
+    "caloocan": (14.6499, 120.9803),
+    "las pinas": (14.4453, 120.9830),
+    "las piñas": (14.4453, 120.9830),
+    "makati": (14.5547, 121.0244),
+    "malabon": (14.6625, 120.9577),
+    "mandaluyong": (14.5794, 121.0359),
+    "marikina": (14.6507, 121.1029),
+    "muntinlupa": (14.4081, 121.0415),
+    "navotas": (14.6684, 120.9428),
+    "paranaque": (14.4793, 121.0198),
+    "parañaque": (14.4793, 121.0198),
+    "pasay": (14.5378, 120.9932),
+    "pasig": (14.5764, 121.0851),
+    "pateros": (14.5440, 121.0680),
+    "san juan": (14.6019, 121.0355),
+    "taguig": (14.5243, 121.0792),
+    "bgc": (14.5490, 121.0534),
+    "valenzuela": (14.6943, 120.9832),
+}
+
+WMO_WEATHER_CODES = {
+    0: "Clear sky",
+    1: "Mainly clear", 2: "Partly cloudy", 3: "Overcast",
+    45: "Foggy", 48: "Icy fog",
+    51: "Light drizzle", 53: "Moderate drizzle", 55: "Dense drizzle",
+    61: "Slight rain", 63: "Moderate rain", 65: "Heavy rain",
+    80: "Slight showers", 81: "Moderate showers", 82: "Violent showers",
+    95: "Thunderstorm", 96: "Thunderstorm with hail", 99: "Thunderstorm with heavy hail",
 }
 
 def get_live_weather_forecast(location: str) -> dict:
-    """Gets the current, real-time weather forecast for a specified location in the US.
+    """Gets the current, real-time weather forecast for a city in Metro Manila.
 
     Args:
-        location: The city name, e.g., "San Francisco".
+        location: The city name, e.g., "Makati", "BGC", or "Quezon City".
 
     Returns:
-        A dictionary containing the temperature and a detailed forecast.
+        A dictionary containing the temperature, weather condition, and wind speed.
     """
     print(f"🛠️ TOOL CALLED: get_live_weather_forecast(location='{location}')")
 
-    # Find coordinates for the location
-    normalized_location = location.lower()
-    coords_str = None
+    normalized = location.lower().replace("ñ", "n")
+    coords = None
     for key, val in LOCATION_COORDINATES.items():
-        if key in normalized_location:
-            coords_str = val
+        if key in normalized or normalized in key:
+            coords = val
             break
-    if not coords_str:
-        return {"status": "error", "message": f"I don't have coordinates for {location}."}
 
+    if not coords:
+        cities = ", ".join(k.title() for k in LOCATION_COORDINATES if k != "bgc")
+        return {
+            "status": "error",
+            "message": f"Location '{location}' not found. Available cities: {cities}."
+        }
+
+    lat, lon = coords
     try:
-        # NWS API requires 2 steps: 1. Get the forecast URL from the coordinates.
-        points_url = f"https://api.weather.gov/points/{coords_str}"
-        headers = {"User-Agent": "ADK Example Notebook"}
-        points_response = requests.get(points_url, headers=headers)
-        points_response.raise_for_status() # Raise an exception for bad status codes
-        forecast_url = points_response.json()['properties']['forecast']
+        url = (
+            f"https://api.open-meteo.com/v1/forecast"
+            f"?latitude={lat}&longitude={lon}"
+            f"&current_weather=true"
+            f"&timezone=Asia%2FManila"
+        )
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        data = response.json()["current_weather"]
 
-        # 2. Get the actual forecast from the URL.
-        forecast_response = requests.get(forecast_url, headers=headers)
-        forecast_response.raise_for_status()
-
-        # Extract the relevant forecast details
-        current_period = forecast_response.json()['properties']['periods'][0]
+        condition = WMO_WEATHER_CODES.get(data["weathercode"], "Unknown conditions")
         return {
             "status": "success",
-            "temperature": f"{current_period['temperature']}°{current_period['temperatureUnit']}",
-            "forecast": current_period['detailedForecast']
+            "location": location.title(),
+            "temperature": f"{data['temperature']}°C",
+            "condition": condition,
+            "wind_speed": f"{data['windspeed']} km/h",
         }
     except requests.exceptions.RequestException as e:
-        return {"status": "error", "message": f"API request failed: {e}"}
+        return {"status": "error", "message": f"Weather API request failed: {e}"}
 
-# --- Agent Definition: An agent that USES the new tool ---
 
 root_agent = Agent(
     name="weather_aware_planner",
     model="gemini-3.6-flash",
-    description="A trip planner that checks the real-time weather before making suggestions.",
-    instruction="You are a cautious trip planner. Before suggesting any outdoor activities, you MUST use the `get_live_weather_forecast` tool to check conditions. Incorporate the live weather details into your recommendation.",
+    description="A trip planner that checks real-time Metro Manila weather before making suggestions.",
+    instruction=(
+        "You are a local trip planner for Metro Manila, Philippines. "
+        "Before suggesting any outdoor activities, you MUST use the `get_live_weather_forecast` tool "
+        "to check current conditions for the requested city. "
+        "Incorporate the live weather — temperature, condition, and wind — into your recommendation."
+    ),
     tools=[get_live_weather_forecast]
 )
