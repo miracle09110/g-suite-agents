@@ -45,7 +45,7 @@ Open `.env` and replace `your_api_key_here` with your key from [Google AI Studio
 
 ## What's New in This Branch
 
-**Concept: Sequential Agent (Pipeline)**
+**Concept 1: Sequential Agent (Pipeline)**
 
 A `SequentialAgent` runs a list of sub-agents **one after another**, automatically passing each agent's output as context to the next. This is the pipeline pattern.
 
@@ -60,7 +60,21 @@ find_and_navigate_agent = SequentialAgent(
 
 Here, `foodie_agent` finds the best restaurant and saves its answer to `state['destination']`. Then `transportation_agent` automatically reads that destination from state and gives directions — no manual wiring needed.
 
-The `router_agent` has been updated in this branch to include `find_and_navigate_agent` as one of its routing options.
+**Concept 2: Clean Folder Structure**
+
+Each sub-agent now lives in its own folder inside `router_agent/`. The main `agent.py` just imports and wires them together — no definitions inline.
+
+```
+router_agent/
+  agent.py                 ← router + imports only
+  day_trip_agent/
+  foodie_agent/
+  transportation_agent/
+  weekend_guide_agent/
+  find_and_navigate_agent/
+```
+
+This is the structure you'd use in a real project as the number of agents grows.
 
 ---
 
@@ -72,7 +86,7 @@ The `router_agent` has been updated in this branch to include `find_and_navigate
 | `day_trip_agent/` | Day trip planner with Google Search (branch 001) |
 | `weather_aware_planner/` | Custom-tool weather planner (branch 002) |
 | `trip_concierge/` | Orchestrator with nested agents (branch 003) |
-| `router_agent/` | **Updated** — now includes a `find_and_navigate_agent` sequential pipeline |
+| `router_agent/` | **Updated** — sequential pipeline added, each sub-agent in its own folder |
 
 ---
 
@@ -95,9 +109,24 @@ For the first prompt, watch two agents fire in sequence: the foodie agent picks 
 
 ---
 
+## You've reached the end of the workshop!
+
+You now know the core ADK patterns:
+
+| Pattern | What it does |
+|---------|-------------|
+| Basic Agent | LLM with instructions |
+| Built-in Tool | Extends an agent with ready-made capabilities (Search) |
+| Custom Tool | Any Python function becomes a tool |
+| Orchestrator | Coordinates multiple agents for complex tasks |
+| Router | Picks the right specialist for each request |
+| Sequential | Chains agents in a pipeline, passing results forward |
+| Folder structure | Keeps multi-agent projects maintainable |
+
+---
+
 ## Navigate Branches
 
 ```bash
-git checkout 005.5-sequential-folder-restructure   # next: clean folder structure
-git checkout 004-router                             # back
+git checkout 004-router    # back
 ```
