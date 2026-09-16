@@ -1,6 +1,5 @@
 from google.adk.agents.llm_agent import Agent
 from google.adk.tools import google_search
-from google.adk.tools.preload_memory_tool import PreloadMemoryTool
 
 day_trip_agent = Agent(
     name="day_trip_agent",
@@ -44,20 +43,19 @@ transportation_agent = Agent(
     instruction="You are a navigation assistant. Given a starting point and a destination, provide clear directions on how to get from the start to the end."
 )
 
-# --- The Brain of the Operation: The Router Agent ---
-# We update the router's instructions to know about the new 'combo' task.
 root_agent = Agent(
     name="router_agent",
     model="gemini-3.6-flash",
+    sub_agents=[foodie_agent, weekend_guide_agent, day_trip_agent, transportation_agent],
     instruction="""
-    You are a request router. Your job is to analyze a user's query and decide which of the following agents or workflows is best suited to handle it.
-    Answer the question by forwarding the question to other agents and giving back their response.
+    You are a request router. Your job is to analyze a user's query and decide which of the following agents is best suited to handle it.
+    Forward the question to the right agent and return their response.
 
     Available Options:
     - 'foodie_agent': For queries *only* about food, restaurants, or eating.
     - 'weekend_guide_agent': For queries about events, concerts, or activities happening on a specific timeframe like a weekend.
+    - 'transportation_agent': For queries about directions or getting from one place to another.
     - 'day_trip_agent': A general planner for any other day trip requests.
-    - 'find_and_navigate_combo': Use this for complex queries that ask to *first find a place* and *then get directions* to it.
 
     Only return the single, most appropriate option's name together with their response.
     """
