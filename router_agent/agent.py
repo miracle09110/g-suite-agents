@@ -50,9 +50,9 @@ _pipeline_foodie = Agent(
     name="pipeline_foodie",
     model="gemini-3.5-flash",
     tools=[google_search],
-    instruction="""You are an expert food critic. Find the best restaurant based on the user's request.
-    Output ONLY the name of the establishment — nothing else.
-    Example: Jin Sho
+    instruction="""You are an expert food critic. Use Google Search to find the single best restaurant or place that matches the user's request.
+    You MUST output ONLY the exact name of the establishment — no extra text, no explanation, no punctuation.
+    Example output: Jin Sho
     """,
     output_key="destination",
 )
@@ -61,8 +61,11 @@ _pipeline_transport = Agent(
     name="pipeline_transport",
     model="gemini-3.5-flash",
     tools=[google_search],
-    instruction="""You are a navigation assistant. The user wants to go to: {destination}.
-    Analyze the user's original query to find their starting point, then provide clear directions.
+    instruction="""You are a navigation assistant. The destination is: {destination}.
+
+    Use Google Search to find the exact address of {destination} and the user's starting location from their query.
+    Then provide clear, step-by-step directions from the starting point to {destination}.
+    Always include: estimated travel time, recommended mode of transport, and key landmarks along the way.
     """,
 )
 
