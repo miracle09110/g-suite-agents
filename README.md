@@ -67,7 +67,7 @@ No tools. No memory. Just the model responding to your prompts. Every pattern yo
 ## Run This Agent
 
 ```bash
-adk web agent
+adk web basic_chat_bot
 ```
 
 Open [http://localhost:8000](http://localhost:8000) in your browser.
