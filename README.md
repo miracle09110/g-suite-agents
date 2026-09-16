@@ -11,8 +11,7 @@ Welcome! In this workshop you'll build a series of AI agents using Google's **Ag
 | `002-agent-custom-tool` | Writing your own Python function as a tool |
 | `003-orchestrator` | One agent delegating to specialist sub-agents |
 | `004-router` | A router that picks the right agent for each request |
-| `005-sequential` | A pipeline where agents run in sequence, passing results forward |
-| `005.5-sequential-folder-restructure` | Refactoring agents into a clean folder structure |
+| `005-sequential` | A sequential pipeline + agents split into their own folders |
 
 ---
 
