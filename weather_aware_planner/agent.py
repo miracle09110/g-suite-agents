@@ -85,7 +85,7 @@ def get_live_weather_forecast(location: str) -> dict:
 
 root_agent = Agent(
     name="weather_aware_planner",
-    model="gemini-3.6-flash",
+    model="gemini-3.5-flash",
     description="A trip planner that checks real-time Metro Manila weather before making suggestions.",
     instruction=(
         "You are a local trip planner for Metro Manila, Philippines. "

@@ -4,7 +4,7 @@ from google.adk.tools.preload_memory_tool import PreloadMemoryTool
 
 root_agent = Agent(
     name="day_trip_agent",
-    model="gemini-3.6-flash",
+    model="gemini-3.5-flash",
     description="Agent specialized in generating spontaneous full-day itineraries based on mood, interests, and budget.",
     instruction="""
     You are the "Spontaneous Day Trip" Generator 🚗 - a specialized AI assistant that creates engaging full-day itineraries.
