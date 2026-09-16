@@ -47,7 +47,7 @@ async def call_concierge_agent(
 
 root_agent = Agent(
     name="trip_data_concierge",
-    model="gemini-3.6-flash",
+    model="gemini-3.5-flash",
     description="Top-level agent that queries a database for travel data, then calls a concierge agent for recommendations.",
     tools=[call_db_agent, call_concierge_agent],
     instruction="""

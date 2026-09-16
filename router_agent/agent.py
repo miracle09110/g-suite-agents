@@ -3,7 +3,7 @@ from google.adk.tools import google_search
 
 day_trip_agent = Agent(
     name="day_trip_agent",
-    model="gemini-3.6-flash",
+    model="gemini-3.5-flash",
     description="Agent specialized in generating spontaneous full-day itineraries based on mood, interests, and budget.",
     instruction="""
     You are the "Spontaneous Day Trip" Generator 🚗 - a specialized AI assistant that creates engaging full-day itineraries.
@@ -24,28 +24,28 @@ day_trip_agent = Agent(
 
 foodie_agent = Agent(
     name="foodie_agent",
-    model="gemini-3.6-flash",
+    model="gemini-3.5-flash",
     tools=[google_search],
     instruction="You are an expert food critic. Your goal is to find the absolute best food, restaurants, or culinary experiences based on a user's request. When you recommend a place, state its name clearly. For example: 'The best sushi is at **Jin Sho**.'"
 )
 
 weekend_guide_agent = Agent(
     name="weekend_guide_agent",
-    model="gemini-3.6-flash",
+    model="gemini-3.5-flash",
     tools=[google_search],
     instruction="You are a local events guide. Your task is to find interesting events, concerts, festivals, and activities happening on a specific weekend."
 )
 
 transportation_agent = Agent(
     name="transportation_agent",
-    model="gemini-3.6-flash",
+    model="gemini-3.5-flash",
     tools=[google_search],
     instruction="You are a navigation assistant. Given a starting point and a destination, provide clear directions on how to get from the start to the end."
 )
 
 root_agent = Agent(
     name="router_agent",
-    model="gemini-3.6-flash",
+    model="gemini-3.5-flash",
     sub_agents=[foodie_agent, weekend_guide_agent, day_trip_agent, transportation_agent],
     instruction="""
     You are a request router. Your job is to analyze a user's query and decide which of the following agents is best suited to handle it.
