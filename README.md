@@ -11,7 +11,10 @@ Welcome! In this workshop you'll build a series of AI agents using Google's **Ag
 | `002-agent-custom-tool` | Writing your own Python function as a tool |
 | `003-orchestrator` | One agent delegating to specialist sub-agents |
 | `004-router` | A router that picks the right agent for each request |
-| `005-sequential` | A sequential pipeline + agents split into their own folders |
+| `005-sequential` | A sequential pipeline (SequentialAgent) |
+| `006-loop-agent` | An iterative refinement loop (LoopAgent) |
+| `007-parallel-agent` | Parallel research with fan-out (ParallelAgent) |
+| `008-agent-skills` | Custom tool functions (skills) for file I/O |
 
 ---
 
@@ -53,7 +56,7 @@ An `Agent` is just an LLM given a name, a model, and instructions. That's it.
 from google.adk.agents import Agent
 
 root_agent = Agent(
-    model='gemini-2.0-flash',
+    model='gemini-3.5-flash',
     name='root_agent',
     instruction='Answer user questions to the best of your knowledge',
 )
