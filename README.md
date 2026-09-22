@@ -11,7 +11,10 @@ Welcome! In this workshop you'll build a series of AI agents using Google's **Ag
 | `002-agent-custom-tool` | Writing your own Python function as a tool |
 | `003-orchestrator` | One agent delegating to specialist sub-agents |
 | `004-router` | A router that picks the right agent for each request |
-| `005-sequential` | A sequential pipeline + agents split into their own folders |
+| `005-sequential` | A sequential pipeline (SequentialAgent) |
+| `006-loop-agent` | An iterative refinement loop (LoopAgent) |
+| `007-parallel-agent` | Parallel research with fan-out (ParallelAgent) |
+| `008-agent-skills` | Custom tool functions (skills) for file I/O |
 
 ---
 
