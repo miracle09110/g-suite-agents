@@ -11,7 +11,10 @@ Welcome! In this workshop you'll build a series of AI agents using Google's **Ag
 | `002-agent-custom-tool` | Writing your own Python function as a tool |
 | `003-orchestrator` | One agent delegating to specialist sub-agents |
 | `004-router` | A router that picks the right agent for each request |
-| `005-sequential` | A sequential pipeline + agents split into their own folders |
+| `005-sequential` | A sequential pipeline (SequentialAgent) |
+| `006-loop-agent` | An iterative refinement loop (LoopAgent) |
+| `007-parallel-agent` | Parallel research with fan-out (ParallelAgent) |
+| `008-agent-skills` | Custom tool functions (skills) for file I/O |
 
 ---
 
@@ -45,36 +48,34 @@ Open `.env` and replace `your_api_key_here` with your key from [Google AI Studio
 
 ## What's New in This Branch
 
-**Concept 1: Sequential Agent (Pipeline)**
+**Concept: Custom Skills (Tool Functions for File I/O)**
 
-A `SequentialAgent` runs a list of sub-agents **one after another**, automatically passing each agent's output as context to the next. This is the pipeline pattern.
+Any plain Python function becomes an agent tool. This branch shows tools that do real file work — reading a CSV, writing results back, and fetching exchange rates.
 
 ```python
-from google.adk.agents.sequential_agent import SequentialAgent
+def get_exchange_rates() -> dict:
+    """Returns the currency exchange rate reference table."""
+    ...
 
-find_and_navigate_agent = SequentialAgent(
-    name="find_and_navigate_agent",
-    sub_agents=[foodie_agent, transportation_agent],
+def clean_blank_rows() -> dict:
+    """Removes hotel records missing name, city, or price from the CSV."""
+    ...
+
+def standardize_currencies(target_currency: str = "USD") -> dict:
+    """Converts all hotel prices to the specified currency using exchange rates."""
+    ...
+
+root_agent = Agent(
+    name="hotel_csv_cleaner",
+    model="gemini-3.5-flash",
+    tools=[get_exchange_rates, clean_blank_rows, standardize_currencies],
+    instruction="You are a hotel data cleaning specialist...",
 )
 ```
 
-Here, `foodie_agent` finds the best restaurant and saves its answer to `state['destination']`. Then `transportation_agent` automatically reads that destination from state and gives directions — no manual wiring needed.
-
-**Concept 2: Clean Folder Structure**
-
-Each sub-agent now lives in its own folder inside `router_agent/`. The main `agent.py` just imports and wires them together — no definitions inline.
-
-```
-router_agent/
-  agent.py                 ← router + imports only
-  day_trip_agent/
-  foodie_agent/
-  transportation_agent/
-  weekend_guide_agent/
-  find_and_navigate_agent/
-```
-
-This is the structure you'd use in a real project as the number of agents grows.
+The data files live in `hotel_cleaner/data/`:
+- `hotels_raw.csv` — 126 rows of hotel records with mixed currencies and missing values
+- `exchange_rates.csv` — reference table for 14 currencies
 
 ---
 
@@ -86,26 +87,26 @@ This is the structure you'd use in a real project as the number of agents grows.
 | `day_trip_agent/` | Day trip planner with Google Search (branch 001) |
 | `weather_aware_planner/` | Custom-tool weather planner (branch 002) |
 | `trip_concierge/` | Orchestrator with nested agents (branch 003) |
-| `router_agent/` | **Updated** — sequential pipeline added, each sub-agent in its own folder |
+| `router_agent/` | Router + SequentialAgent pipeline (branch 005) |
+| `loop_planner/` | LoopAgent critic-refiner loop (branch 006) |
+| `city_explorer/` | ParallelAgent city guide (branch 007) |
+| `hotel_cleaner/` | **New** — agent with file I/O skills: clean blanks + standardize currencies |
 
 ---
 
 ## Run an Agent
 
 ```bash
-# Run the router (which now includes the sequential pipeline)
-adk web router_agent
+adk web hotel_cleaner
 ```
 
 Open [http://localhost:8000](http://localhost:8000) in your browser.
 
-## Things to Try (with `router_agent`)
+## Things to Try (with `hotel_cleaner`)
 
-- `"Find the best sushi near Palo Alto and give me directions from San Francisco."` → triggers the sequential pipeline: find → navigate
-- `"What's good to eat in downtown SF?"` → routes to `foodie_agent` directly (no pipeline needed)
-- `"Plan a day trip to Napa."` → routes to `day_trip_agent`
-
-For the first prompt, watch two agents fire in sequence: the foodie agent picks the restaurant, then the navigation agent gives directions to that exact place.
+- `"Show me the exchange rates."`
+- `"Clean the hotel data."`
+- `"Standardize all prices to EUR."`
 
 ---
 
@@ -121,12 +122,14 @@ You now know the core ADK patterns:
 | Orchestrator | Coordinates multiple agents for complex tasks |
 | Router | Picks the right specialist for each request |
 | Sequential | Chains agents in a pipeline, passing results forward |
-| Folder structure | Keeps multi-agent projects maintainable |
+| Loop | Iterates critic → refiner until quality is met or max rounds reached |
+| Parallel | Fans out to multiple agents simultaneously, then aggregates |
+| Skills (File I/O) | Tools that read and write files as part of a data workflow |
 
 ---
 
 ## Navigate Branches
 
 ```bash
-git checkout 004-router    # back
+git checkout 007-parallel-agent    # back
 ```
