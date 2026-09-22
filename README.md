@@ -11,7 +11,10 @@ Welcome! In this workshop you'll build a series of AI agents using Google's **Ag
 | `002-agent-custom-tool` | Writing your own Python function as a tool |
 | `003-orchestrator` | One agent delegating to specialist sub-agents |
 | `004-router` | A router that picks the right agent for each request |
-| `005-sequential` | A sequential pipeline + agents split into their own folders |
+| `005-sequential` | A sequential pipeline (SequentialAgent) |
+| `006-loop-agent` | An iterative refinement loop (LoopAgent) |
+| `007-parallel-agent` | Parallel research with fan-out (ParallelAgent) |
+| `008-agent-skills` | Custom tool functions (skills) for file I/O |
 
 ---
 
@@ -45,36 +48,36 @@ Open `.env` and replace `your_api_key_here` with your key from [Google AI Studio
 
 ## What's New in This Branch
 
-**Concept 1: Sequential Agent (Pipeline)**
+**Concept: Parallel Agent (Fan-out)**
 
-A `SequentialAgent` runs a list of sub-agents **one after another**, automatically passing each agent's output as context to the next. This is the pipeline pattern.
+A `ParallelAgent` runs all its sub-agents **simultaneously**. Each sub-agent writes to its own `output_key` in state so results never overwrite each other. A downstream aggregator agent then reads all those keys and compiles a single response.
 
 ```python
-from google.adk.agents.sequential_agent import SequentialAgent
+from google.adk.agents.parallel_agent import ParallelAgent
 
-find_and_navigate_agent = SequentialAgent(
-    name="find_and_navigate_agent",
-    sub_agents=[foodie_agent, transportation_agent],
+# each finder saves to its own state key
+museum_finder_agent  = Agent(..., output_key="museum_result")
+concert_finder_agent = Agent(..., output_key="concert_result")
+restaurant_finder_agent = Agent(..., output_key="restaurant_result")
+
+# all three run at the same time
+parallel_research_agent = ParallelAgent(
+    name="parallel_research_agent",
+    sub_agents=[museum_finder_agent, concert_finder_agent, restaurant_finder_agent],
+)
+
+# aggregator reads all three keys and combines them
+aggregator_agent = Agent(
+    name="aggregator_agent",
+    instruction="Compile the results from {museum_result}, {concert_result}, {restaurant_result}...",
+)
+
+# research in parallel, then aggregate
+root_agent = SequentialAgent(
+    name="city_explorer",
+    sub_agents=[parallel_research_agent, aggregator_agent],
 )
 ```
-
-Here, `foodie_agent` finds the best restaurant and saves its answer to `state['destination']`. Then `transportation_agent` automatically reads that destination from state and gives directions — no manual wiring needed.
-
-**Concept 2: Clean Folder Structure**
-
-Each sub-agent now lives in its own folder inside `router_agent/`. The main `agent.py` just imports and wires them together — no definitions inline.
-
-```
-router_agent/
-  agent.py                 ← router + imports only
-  day_trip_agent/
-  foodie_agent/
-  transportation_agent/
-  weekend_guide_agent/
-  find_and_navigate_agent/
-```
-
-This is the structure you'd use in a real project as the number of agents grows.
 
 ---
 
@@ -86,47 +89,33 @@ This is the structure you'd use in a real project as the number of agents grows.
 | `day_trip_agent/` | Day trip planner with Google Search (branch 001) |
 | `weather_aware_planner/` | Custom-tool weather planner (branch 002) |
 | `trip_concierge/` | Orchestrator with nested agents (branch 003) |
-| `router_agent/` | **Updated** — sequential pipeline added, each sub-agent in its own folder |
+| `router_agent/` | Router + SequentialAgent pipeline (branch 005) |
+| `loop_planner/` | LoopAgent critic-refiner loop (branch 006) |
+| `city_explorer/` | **New** — ParallelAgent that fans out to three finders, then aggregates |
 
 ---
 
 ## Run an Agent
 
 ```bash
-# Run the router (which now includes the sequential pipeline)
-adk web router_agent
+adk web city_explorer
 ```
 
 Open [http://localhost:8000](http://localhost:8000) in your browser.
 
-## Things to Try (with `router_agent`)
+## Things to Try (with `city_explorer`)
 
-- `"Find the best sushi near Palo Alto and give me directions from San Francisco."` → triggers the sequential pipeline: find → navigate
-- `"What's good to eat in downtown SF?"` → routes to `foodie_agent` directly (no pipeline needed)
-- `"Plan a day trip to Napa."` → routes to `day_trip_agent`
+- `"What's there to do in Manila this weekend?"`
+- `"Give me a city guide for Tokyo."`
+- `"I'm visiting New York next week — what should I see, hear, and eat?"`
 
-For the first prompt, watch two agents fire in sequence: the foodie agent picks the restaurant, then the navigation agent gives directions to that exact place.
-
----
-
-## You've reached the end of the workshop!
-
-You now know the core ADK patterns:
-
-| Pattern | What it does |
-|---------|-------------|
-| Basic Agent | LLM with instructions |
-| Built-in Tool | Extends an agent with ready-made capabilities (Search) |
-| Custom Tool | Any Python function becomes a tool |
-| Orchestrator | Coordinates multiple agents for complex tasks |
-| Router | Picks the right specialist for each request |
-| Sequential | Chains agents in a pipeline, passing results forward |
-| Folder structure | Keeps multi-agent projects maintainable |
+Watch three agents fire simultaneously (museums, concerts, restaurants), then the aggregator compile everything into one city guide.
 
 ---
 
 ## Navigate Branches
 
 ```bash
-git checkout 004-router    # back
+git checkout 008-agent-skills    # next: custom skills for file I/O
+git checkout 006-loop-agent      # back
 ```
