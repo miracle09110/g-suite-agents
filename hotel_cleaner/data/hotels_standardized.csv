@@ -1,0 +1,109 @@
+hotel_name,city,country,stars,rating,price_per_night,currency,amenities,contact_email,price_usd
+Premier Sydney Haven,Sydney,Australia,3,,322,AUD,"Business Center, WiFi",,209.3
+Pacific Barcelona Suites,Barcelona,Spain,2,3.1,223,EUR,"Conference Room, WiFi",,240.84
+Urban Tokyo Resort,Tokyo,Japan,2,,12940,JPY,"Pool, WiFi, Gym",stay@urbantokyoresort.com,85.4
+Elite Paris Haven,Paris,France,3,3.6,241,EUR,"Pool, Spa, WiFi",stay@eliteparishaven.com,260.28
+Grand Bangkok Inn,Bangkok,Thailand,,4.1,5578,THB,"Airport Shuttle, WiFi, Pool",stay@grandbangkokinn.com,156.18
+Classic Kuala Lumpur Manor,Kuala Lumpur,Malaysia,5,4.2,543,MYR,"WiFi, Restaurant, Bar",stay@classickualalumpurmanor.com,119.46
+Luxury Seoul Residences,Seoul,South Korea,,5.0,91197,KRW,"Business Center, WiFi",,68.4
+Heritage Tokyo Hotel,Tokyo,Japan,2,,23080,JPY,"Business Center, WiFi",,152.33
+Pacific Hong Kong Suites,Hong Kong,Hong Kong,4,4.4,3260,HKD,"WiFi, Restaurant, Bar",stay@pacifichongkongsuites.com,417.28
+Classic Tokyo Inn,Tokyo,Japan,3,4.7,39148,JPY,"Business Center, WiFi",stay@classictokyoinn.com,258.38
+Classic New York Inn,New York,USA,3,3.6,640,USD,"Conference Room, WiFi",stay@classicnewyorkinn.com,640.0
+Heritage London Haven,London,UK,,4.8,295,GBP,"Pool, WiFi, Gym",stay@heritagelondonhaven.com,374.65
+Elite Sydney Manor,Sydney,Australia,2,4.2,369,AUD,"WiFi, Restaurant, Bar",stay@elitesydneymanor.com,239.85
+Royal Singapore Palace,Singapore,Singapore,5,3.5,309,SGD,"Pool, WiFi, Gym",stay@royalsingaporepalace.com,228.66
+Heritage Barcelona Resort,Barcelona,Spain,3,4.8,198,EUR,"Pool, Gym, Restaurant",stay@heritagebarcelonaresort.com,213.84
+Classic Barcelona Manor,Barcelona,Spain,2,3.8,162,EUR,"Pool, WiFi, Breakfast Included",stay@classicbarcelonamanor.com,174.96
+Plaza Bangkok Boutique,Bangkok,Thailand,4,3.9,6232,THB,"Business Center, WiFi",,174.5
+Classic London Tower,London,UK,2,4.8,175,GBP,"WiFi, Restaurant, Bar",stay@classiclondontower.com,222.25
+Classic Kuala Lumpur Tower,Kuala Lumpur,Malaysia,5,4.2,172,MYR,,,37.84
+Elite Seoul Boutique,Seoul,South Korea,4,3.4,202590,KRW,,stay@eliteseoulboutique.com,151.94
+Classic Sydney Residences,Sydney,Australia,5,4.5,405,AUD,"Business Center, WiFi",stay@classicsydneyresidences.com,263.25
+Classic Manila Lodge,Manila,Philippines,5,5.0,9519,PHP,,stay@classicmanilalodge.com,166.58
+Royal Paris Retreat,Paris,France,3,3.4,219,EUR,"Pool, Gym, Restaurant",stay@royalparisretreat.com,236.52
+Grand Singapore Resort,Singapore,Singapore,2,4.5,508,SGD,"Pool, WiFi, Gym",stay@grandsingaporeresort.com,375.92
+Premier Bangkok Palace,Bangkok,Thailand,5,4.0,8213,THB,"Pool, WiFi, Breakfast Included",,229.96
+Pacific Tokyo Retreat,Tokyo,Japan,2,3.6,40806,JPY,"Airport Shuttle, WiFi, Pool",,269.32
+Luxury Bangkok Retreat,Bangkok,Thailand,2,,8641,THB,"Business Center, WiFi",stay@luxurybangkokretreat.com,241.95
+Royal New York Residences,New York,USA,4,3.5,630,USD,"Pool, WiFi, Breakfast Included",,630.0
+The Singapore Haven,Singapore,Singapore,2,3.4,525,SGD,"Airport Shuttle, WiFi, Pool",stay@thesingaporehaven.com,388.5
+Elite London Resort,London,UK,4,4.0,217,GBP,"Rooftop Bar, WiFi",stay@elitelondonresort.com,275.59
+Grand Manila Suites,Manila,Philippines,3,4.4,10779,PHP,"Pool, WiFi, Breakfast Included",stay@grandmanilasuites.com,188.63
+Royal Singapore Manor,Singapore,Singapore,3,3.2,640,SGD,,stay@royalsingaporemanor.com,473.6
+Grand Manila Inn,Manila,Philippines,3,3.7,8074,PHP,,,141.3
+Royal Bangkok Resort,Bangkok,Thailand,2,3.3,6512,THB,,,182.34
+Heritage Manila Haven,Manila,Philippines,,3.6,3639,PHP,,,63.68
+The Paris Manor,Paris,France,2,3.0,189,EUR,"Pool, WiFi, Breakfast Included",stay@theparismanor.com,204.12
+Classic London Retreat,London,UK,,4.4,79,GBP,,,100.33
+The Bangkok Hotel,Bangkok,Thailand,,,8427,THB,"Airport Shuttle, WiFi, Pool",stay@thebangkokhotel.com,235.96
+Premier Kuala Lumpur Haven,Kuala Lumpur,Malaysia,5,,672,MYR,"Conference Room, WiFi",stay@premierkualalumpurhaven.com,147.84
+Grand Paris Retreat,Paris,France,3,,105,EUR,"Pool, Spa, WiFi",,113.4
+Urban Hong Kong Tower,Hong Kong,Hong Kong,4,4.9,1055,HKD,,stay@urbanhongkongtower.com,135.04
+Classic Seoul Inn,Seoul,South Korea,5,4.5,274516,KRW,"WiFi, Restaurant, Bar",stay@classicseoulinn.com,205.89
+Elite Kuala Lumpur Haven,Kuala Lumpur,Malaysia,3,4.8,292,MYR,"WiFi, Restaurant, Bar",,64.24
+Grand London Suites,London,UK,,3.3,216,GBP,"Pool, Spa, WiFi",stay@grandlondonsuites.com,274.32
+Grand Sydney Manor,Sydney,Australia,4,4.7,184,AUD,"Conference Room, WiFi",,119.6
+Grand Manila Resort,Manila,Philippines,4,,15689,PHP,"Airport Shuttle, WiFi, Pool",stay@grandmanilaresort.com,274.56
+Classic New York Manor,New York,USA,3,3.5,449,USD,"Pool, WiFi, Gym",stay@classicnewyorkmanor.com,449.0
+Classic Seoul Resort,Seoul,South Korea,4,4.6,506273,KRW,"Pool, Gym, Restaurant",stay@classicseoulresort.com,379.7
+Pacific Tokyo Retreat,Tokyo,Japan,4,4.0,28428,JPY,,,187.62
+Heritage Seoul Suites,Seoul,South Korea,,4.7,119478,KRW,"Conference Room, WiFi",stay@heritageseoulsuites.com,89.61
+The Seoul Inn,Seoul,South Korea,2,,498651,KRW,"Business Center, WiFi",stay@theseoulinn.com,373.99
+Classic Singapore Suites,Singapore,Singapore,3,3.1,346,SGD,"Rooftop Bar, WiFi",stay@classicsingaporesuites.com,256.04
+Urban New York Retreat,New York,USA,3,3.1,510,USD,"Airport Shuttle, WiFi, Pool",stay@urbannewyorkretreat.com,510.0
+Heritage Tokyo Inn,Tokyo,Japan,2,4.0,59028,JPY,,stay@heritagetokyoinn.com,389.58
+Plaza Seoul Manor,Seoul,South Korea,,3.9,226664,KRW,"Spa, WiFi, Bar",,170.0
+Grand London Suites,London,UK,4,,208,GBP,"Spa, WiFi, Bar",stay@grandlondonsuites.com,264.16
+Royal Paris Residences,Paris,France,,3.5,286,EUR,"Airport Shuttle, WiFi, Pool",,308.88
+Classic Paris Lodge,Paris,France,3,3.3,258,EUR,"Pool, Gym, Restaurant",stay@classicparislodge.com,278.64
+Royal Manila Manor,Manila,Philippines,3,3.4,12915,PHP,"WiFi, Restaurant, Bar",stay@royalmanilamanor.com,226.01
+Urban Barcelona Boutique,Barcelona,Spain,5,3.9,223,EUR,"Conference Room, WiFi",stay@urbanbarcelonaboutique.com,240.84
+The Kuala Lumpur Boutique,Kuala Lumpur,Malaysia,5,4.1,597,MYR,"Spa, WiFi, Bar",stay@thekualalumpurboutique.com,131.34
+Pacific London Suites,London,UK,3,4.8,94,GBP,"Business Center, WiFi",,119.38
+Luxury Kuala Lumpur Residences,Kuala Lumpur,Malaysia,,4.1,766,MYR,,stay@luxurykualalumpurresidences.com,168.52
+Elite Sydney Hotel,Sydney,Australia,2,3.5,256,AUD,"WiFi, Restaurant, Bar",stay@elitesydneyhotel.com,166.4
+Modern Hong Kong Boutique,Hong Kong,Hong Kong,2,4.2,4164,HKD,"Airport Shuttle, WiFi, Pool",stay@modernhongkongboutique.com,532.99
+Luxury Bangkok Boutique,Bangkok,Thailand,5,4.2,3633,THB,"Airport Shuttle, WiFi, Pool",stay@luxurybangkokboutique.com,101.72
+Elite Seoul Boutique,Seoul,South Korea,5,4.9,418074,KRW,"Pool, WiFi, Breakfast Included",,313.56
+Heritage Seoul Tower,Seoul,South Korea,4,4.9,222882,KRW,"Pool, Gym, Restaurant",stay@heritageseoultower.com,167.16
+Grand New York Resort,New York,USA,5,4.0,254,USD,,stay@grandnewyorkresort.com,254.0
+Urban Kuala Lumpur Lodge,Kuala Lumpur,Malaysia,5,3.9,689,MYR,"Spa, WiFi, Bar",stay@urbankualalumpurlodge.com,151.58
+Premier Bangkok Boutique,Bangkok,Thailand,3,,5126,THB,"Pool, WiFi, Breakfast Included",stay@premierbangkokboutique.com,143.53
+Modern Sydney Lodge,Sydney,Australia,,5.0,370,AUD,"WiFi, Restaurant, Bar",stay@modernsydneylodge.com,240.5
+Luxury Sydney Palace,Sydney,Australia,2,3.3,318,AUD,"Airport Shuttle, WiFi, Pool",,206.7
+Heritage Barcelona Haven,Barcelona,Spain,5,4.3,111,EUR,"Pool, WiFi, Breakfast Included",stay@heritagebarcelonahaven.com,119.88
+Modern New York Tower,New York,USA,5,3.4,121,USD,"Pool, WiFi, Breakfast Included",stay@modernnewyorktower.com,121.0
+Pacific Seoul Lodge,Seoul,South Korea,,3.6,141171,KRW,"WiFi, Restaurant, Bar",,105.88
+Luxury Tokyo Palace,Tokyo,Japan,,3.7,20478,JPY,"Pool, WiFi, Gym",stay@luxurytokyopalace.com,135.15
+The Manila Tower,Manila,Philippines,4,4.3,5177,PHP,"Spa, WiFi, Bar",stay@themanilatower.com,90.6
+Grand Manila Suites,Manila,Philippines,5,3.8,5121,PHP,"Pool, WiFi, Breakfast Included",stay@grandmanilasuites.com,89.62
+Elite Kuala Lumpur Haven,Kuala Lumpur,Malaysia,4,4.5,111,MYR,,stay@elitekualalumpurhaven.com,24.42
+Royal Hong Kong Retreat,Hong Kong,Hong Kong,3,4.8,5216,HKD,"Pool, WiFi, Breakfast Included",stay@royalhongkongretreat.com,667.65
+Classic Singapore Lodge,Singapore,Singapore,4,3.4,444,SGD,"Conference Room, WiFi",stay@classicsingaporelodge.com,328.56
+The Barcelona Resort,Barcelona,Spain,2,3.9,200,EUR,"Rooftop Bar, WiFi",,216.0
+Classic Singapore Tower,Singapore,Singapore,5,4.1,563,SGD,"Pool, WiFi, Breakfast Included",stay@classicsingaporetower.com,416.62
+Premier Sydney Residences,Sydney,Australia,2,3.9,191,AUD,"Rooftop Bar, WiFi",stay@premiersydneyresidences.com,124.15
+The Sydney Palace,Sydney,Australia,3,3.7,263,AUD,"Pool, Gym, Restaurant",stay@thesydneypalace.com,170.95
+Luxury Singapore Residences,Singapore,Singapore,3,3.2,643,SGD,"Pool, Gym, Restaurant",stay@luxurysingaporeresidences.com,475.82
+Premier Paris Palace,Paris,France,,4.1,117,EUR,,stay@premierparispalace.com,126.36
+Premier Bangkok Retreat,Bangkok,Thailand,,,8642,THB,"Pool, WiFi, Breakfast Included",stay@premierbangkokretreat.com,241.98
+Plaza Barcelona Residences,Barcelona,Spain,5,4.8,95,EUR,"Business Center, WiFi",stay@plazabarcelonaresidences.com,102.6
+Grand Tokyo Residences,Tokyo,Japan,4,3.7,52676,JPY,"Pool, Spa, WiFi",stay@grandtokyoresidences.com,347.66
+Luxury New York Retreat,New York,USA,,3.4,684,USD,"WiFi, Restaurant, Bar",stay@luxurynewyorkretreat.com,684.0
+Royal Barcelona Resort,Barcelona,Spain,4,,253,EUR,"Conference Room, WiFi",stay@royalbarcelonaresort.com,273.24
+Royal Hong Kong Inn,Hong Kong,Hong Kong,4,4.2,5495,HKD,"Rooftop Bar, WiFi",stay@royalhongkonginn.com,703.36
+Heritage Manila Resort,Manila,Philippines,5,,8982,PHP,,stay@heritagemanilaresort.com,157.19
+Modern Sydney Manor,Sydney,Australia,3,3.5,506,AUD,"Conference Room, WiFi",stay@modernsydneymanor.com,328.9
+Classic New York Lodge,New York,USA,5,3.9,409,USD,"Spa, WiFi, Bar",stay@classicnewyorklodge.com,409.0
+Pacific Kuala Lumpur Haven,Kuala Lumpur,Malaysia,4,3.9,123,MYR,"Pool, Gym, Restaurant",stay@pacifickualalumpurhaven.com,27.06
+Modern Hong Kong Manor,Hong Kong,Hong Kong,5,,4716,HKD,,stay@modernhongkongmanor.com,603.65
+Royal Manila Hotel,Manila,Philippines,2,4.8,6512,PHP,,stay@royalmanilahotel.com,113.96
+Luxury Singapore Residences,Singapore,Singapore,,,313,SGD,"Airport Shuttle, WiFi, Pool",stay@luxurysingaporeresidences.com,231.62
+Urban Singapore Palace,Singapore,Singapore,3,3.6,328,SGD,"Airport Shuttle, WiFi, Pool",stay@urbansingaporepalace.com,242.72
+The Hong Kong Residences,Hong Kong,Hong Kong,4,,1586,HKD,"Business Center, WiFi",stay@thehongkongresidences.com,203.01
+Heritage London Manor,London,UK,,3.4,336,GBP,,stay@heritagelondonmanor.com,426.72
+Grand Barcelona Haven,Barcelona,Spain,,4.5,137,EUR,,,147.96
+Pacific Paris Retreat,Paris,France,5,3.6,364,EUR,"Airport Shuttle, WiFi, Pool",stay@pacificparisretreat.com,393.12
+Heritage Manila Haven,Manila,Philippines,2,3.8,3211,PHP,"Airport Shuttle, WiFi, Pool",stay@heritagemanilahaven.com,56.19
+Luxury London Residences,London,UK,5,4.5,127,GBP,"Business Center, WiFi",stay@luxurylondonresidences.com,161.29

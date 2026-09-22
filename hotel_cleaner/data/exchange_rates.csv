@@ -1,0 +1,15 @@
+currency_code,currency_name,country,rate_to_usd,usd_to_currency
+USD,US Dollar,United States,1.0,1.0
+PHP,Philippine Peso,Philippines,0.0175,57.14
+EUR,Euro,Eurozone,1.08,0.926
+GBP,British Pound,United Kingdom,1.27,0.787
+JPY,Japanese Yen,Japan,0.0066,151.52
+SGD,Singapore Dollar,Singapore,0.74,1.351
+AUD,Australian Dollar,Australia,0.65,1.538
+THB,Thai Baht,Thailand,0.028,35.71
+MYR,Malaysian Ringgit,Malaysia,0.22,4.545
+KRW,South Korean Won,South Korea,0.00075,1333.33
+HKD,Hong Kong Dollar,Hong Kong,0.128,7.813
+IDR,Indonesian Rupiah,Indonesia,0.000062,16129.03
+CNY,Chinese Yuan,China,0.138,7.246
+INR,Indian Rupee,India,0.012,83.33
