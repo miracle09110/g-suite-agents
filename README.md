@@ -11,7 +11,10 @@ Welcome! In this workshop you'll build a series of AI agents using Google's **Ag
 | `002-agent-custom-tool` | Writing your own Python function as a tool |
 | `003-orchestrator` | One agent delegating to specialist sub-agents |
 | `004-router` | A router that picks the right agent for each request |
-| `005-sequential` | A sequential pipeline + agents split into their own folders |
+| `005-sequential` | A sequential pipeline (SequentialAgent) |
+| `006-loop-agent` | An iterative refinement loop (LoopAgent) |
+| `007-parallel-agent` | Parallel research with fan-out (ParallelAgent) |
+| `008-agent-skills` | Custom tool functions (skills) for file I/O |
 
 ---
 
@@ -45,36 +48,35 @@ Open `.env` and replace `your_api_key_here` with your key from [Google AI Studio
 
 ## What's New in This Branch
 
-**Concept 1: Sequential Agent (Pipeline)**
+**Concept: Loop Agent (Iterative Refinement)**
 
-A `SequentialAgent` runs a list of sub-agents **one after another**, automatically passing each agent's output as context to the next. This is the pipeline pattern.
+A `LoopAgent` runs its sub-agents in a cycle, up to `max_iterations` times. Any sub-agent can call the built-in `exit_loop` tool to stop early once the output is good enough.
 
 ```python
-from google.adk.agents.sequential_agent import SequentialAgent
+from google.adk.agents.loop_agent import LoopAgent
+from google.adk.tools.exit_loop_tool import exit_loop
 
-find_and_navigate_agent = SequentialAgent(
-    name="find_and_navigate_agent",
-    sub_agents=[foodie_agent, transportation_agent],
+# critic calls exit_loop when the plan is strong enough
+critic_agent = Agent(name="critic_agent", tools=[exit_loop], ...)
+
+# refiner rewrites the plan based on the critique
+refiner_agent = Agent(name="refiner_agent", ...)
+
+# runs critic → refiner up to 3 times (stops early if critic is satisfied)
+refinement_loop = LoopAgent(
+    name="refinement_loop",
+    sub_agents=[critic_agent, refiner_agent],
+    max_iterations=3,
+)
+
+# root: draft first, then loop to refine
+root_agent = SequentialAgent(
+    name="loop_planner",
+    sub_agents=[planner_agent, refinement_loop],
 )
 ```
 
-Here, `foodie_agent` finds the best restaurant and saves its answer to `state['destination']`. Then `transportation_agent` automatically reads that destination from state and gives directions — no manual wiring needed.
-
-**Concept 2: Clean Folder Structure**
-
-Each sub-agent now lives in its own folder inside `router_agent/`. The main `agent.py` just imports and wires them together — no definitions inline.
-
-```
-router_agent/
-  agent.py                 ← router + imports only
-  day_trip_agent/
-  foodie_agent/
-  transportation_agent/
-  weekend_guide_agent/
-  find_and_navigate_agent/
-```
-
-This is the structure you'd use in a real project as the number of agents grows.
+The planner drafts an initial plan; the loop then runs critic → refiner up to three times. The critic calls `exit_loop` as soon as the plan is solid, so the loop often finishes in fewer than three rounds.
 
 ---
 
@@ -86,47 +88,32 @@ This is the structure you'd use in a real project as the number of agents grows.
 | `day_trip_agent/` | Day trip planner with Google Search (branch 001) |
 | `weather_aware_planner/` | Custom-tool weather planner (branch 002) |
 | `trip_concierge/` | Orchestrator with nested agents (branch 003) |
-| `router_agent/` | **Updated** — sequential pipeline added, each sub-agent in its own folder |
+| `router_agent/` | Router + SequentialAgent pipeline (branch 005) |
+| `loop_planner/` | **New** — LoopAgent that drafts then iteratively refines a plan |
 
 ---
 
 ## Run an Agent
 
 ```bash
-# Run the router (which now includes the sequential pipeline)
-adk web router_agent
+adk web loop_planner
 ```
 
 Open [http://localhost:8000](http://localhost:8000) in your browser.
 
-## Things to Try (with `router_agent`)
+## Things to Try (with `loop_planner`)
 
-- `"Find the best sushi near Palo Alto and give me directions from San Francisco."` → triggers the sequential pipeline: find → navigate
-- `"What's good to eat in downtown SF?"` → routes to `foodie_agent` directly (no pipeline needed)
-- `"Plan a day trip to Napa."` → routes to `day_trip_agent`
+- `"Plan a product launch for a mobile app."`
+- `"Create a 30-day study plan for learning Python."`
+- `"Plan a community fundraising event."`
 
-For the first prompt, watch two agents fire in sequence: the foodie agent picks the restaurant, then the navigation agent gives directions to that exact place.
-
----
-
-## You've reached the end of the workshop!
-
-You now know the core ADK patterns:
-
-| Pattern | What it does |
-|---------|-------------|
-| Basic Agent | LLM with instructions |
-| Built-in Tool | Extends an agent with ready-made capabilities (Search) |
-| Custom Tool | Any Python function becomes a tool |
-| Orchestrator | Coordinates multiple agents for complex tasks |
-| Router | Picks the right specialist for each request |
-| Sequential | Chains agents in a pipeline, passing results forward |
-| Folder structure | Keeps multi-agent projects maintainable |
+Watch the critic evaluate each draft and either call `exit_loop` (done) or list weaknesses for the refiner to fix.
 
 ---
 
 ## Navigate Branches
 
 ```bash
-git checkout 004-router    # back
+git checkout 007-parallel-agent    # next: parallel fan-out with ParallelAgent
+git checkout 005-sequential        # back
 ```
